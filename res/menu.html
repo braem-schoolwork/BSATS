@@ -1,0 +1,980 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="menu.css">
+</head>
+
+<body>
+	<div id="wrap">
+    <div id="sidebar">
+      <p class="chptrhdr"><a href="#chapter1">1. Sequences</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter1a">a. DNA</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter1b">b. RNA</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter1c">c. Protein</a></p>
+      <p class="chptrhdr"><a href="#chapter2">2. Algorithms</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter2a">a. Needleman-Wunsch</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter2b">b. Smith-Waterman</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter2c">c. Scoring</a></p>
+      <p class="subchptrhdr">&nbsp;&nbsp;<a href="#chapter2d">d. Outputs</a></p>
+    </div>
+    <div id="mainContent">
+      <a name="chapter1"><h1>Sequences</h1></a>
+
+      <h2><a name="chapter1a">Deoxyribonucleic Acid (DNA)</a></h2>
+      <p>
+        DNA is a doubled stranded molecule that holds the genetic instructions used in the
+        development, functionality, reproduction, and growth of an organism. For the purposes
+        of sequencing, DNA is shown in a single sequence of the bases Guanine (G),
+        Cytosine (C), Adenine (A), and Thymine (T).
+      </p>
+      <p>DNA Example: <a style="font-family: consolas">GCTACTAGGTCA</a></p>
+      <h4>Bases:</h4>
+      <figure>
+        <img src="gui_help/imgs/bases/guanine.png" style="width: auto; height: 100px">
+        <figcaption>Guanine</figcaption>
+      </figure>
+      <figure>
+        <img src="gui_help/imgs/bases/cytosine.png" style="width: auto; height: 100px">
+        <figcaption>Cytosine</figcaption>
+      </figure>
+      <figure>
+        <img src="gui_help/imgs/bases/adenine.png" style="width: auto; height: 100px">
+        <figcaption>Adenine</figcaption>
+      </figure>
+      <figure style="padding-bottom: 20px">
+        <img src="gui_help/imgs/bases/thymine.png" style="width: auto; height: 100px">
+        <figcaption>Thymine</figcaption>
+      </figure>
+
+      <h2><a name="chapter1b">Ribonucleic Acid (RNA)</a></h2>
+      <p>
+        RNA is a single-stranded copy of a section of <a href="#chapter1a">DNA</a>, much like a recipe from a
+        cookbook. Like DNA, it is essential for life. RNA uses the same
+        bases, but Thymine (T) is replaced with Uracil (U). This is because Thymine is
+        very stable, but Uracil is cheaper; DNA needs to be stable, whereas RNA is a
+        short-lived copy, and thus does not need the extra stability. In some systems,
+        RNA sequences are written with T instead of U because of the irrelevance in sequencing.
+      </p>
+      <h4 style="margin-bottom: 0">Example:</h4>
+      <table border="1">
+        <thead>
+        <tr>
+          <th>Sequence Type</th>
+          <th>Sequence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>DNA</td>
+          <td style="font-family: consolas">GCTACTAGGTCA</td>
+        </tr>
+        <tr>
+          <td>RNA</td>
+          <td style="font-family: consolas">GCUACUAGGUCA</td>
+        </tr>
+        </tbody>
+      </table>
+      <h4>Bases:</h4>
+      <figure>
+        <img src="gui_help/imgs/bases/guanine.png" style="width: auto; height: 100px">
+        <figcaption>Guanine</figcaption>
+      </figure>
+      <figure>
+        <img src="gui_help/imgs/bases/cytosine.png" style="width: auto; height: 100px">
+        <figcaption>Cytosine</figcaption>
+      </figure>
+      <figure>
+        <img src="gui_help/imgs/bases/adenine.png" style="width: auto; height: 100px">
+        <figcaption>Adenine</figcaption>
+      </figure>
+      <figure style="padding-bottom: 20px">
+        <img src="gui_help/imgs/bases/uracil.png" style="width: auto; height: 100px">
+        <figcaption>Uracil</figcaption>
+      </figure>
+
+      <h2><a name="chapter1c">Protein</a></h2>
+      <p>
+        Proteins are large biomolecules with complex structures that are constructed using <a href="#chapter1b">RNA</a>.
+        Despite the complexity, a protein is just a sequence of amino acids. Its structure and
+        function are determinedby this sequence. Each amino acid is made from a one or more
+        different codons. A codon is simply just a sequence of three bases. Each amino acid may
+        be the result one, none, or many codons. Codons that don't correspond to an amino acid are
+        called stop codons, which terminate the sequence.
+      </p>
+      <h4 style="margin-bottom: 0">Example:</h4>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Sequence Type</th>
+            <th>Sequence</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>DNA</td>
+          <td style="font-family: consolas">GCTACTAGGTCA</td>
+        </tr>
+        <tr>
+          <td>RNA</td>
+          <td style="font-family: consolas">GCUACUAGGUCA</td>
+        </tr>
+        <tr>
+          <td>Protein</td>
+          <td style="font-family: consolas">ATRS</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h4 style="margin-bottom:0">Amino Acid Abbrevations:</h4>
+      <table border="1">
+        <tr>
+          <th>1 Letter Code</th>
+          <th>3 Letter Code</th>
+          <th>Amino Acid</th>
+          <th>1 Letter Code</th>
+          <th>3 Letter Code</th>
+          <th>Amino Acid</th>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>ala</td>
+          <td>Alanine</td>
+          <td>M</td>
+          <td>met</td>
+          <td>Methionine</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>cys</td>
+          <td>Cysteine</td>
+          <td>N</td>
+          <td>asn</td>
+          <td>Asparagine</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>asp</td>
+          <td>Aspartic Acid</td>
+          <td>P</td>
+          <td>pro</td>
+          <td>Proline</td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td>glu</td>
+          <td>Glutamic Acid</td>
+          <td>Q</td>
+          <td>gln</td>
+          <td>Glutamine</td>
+        </tr>
+        <tr>
+          <td>F</td>
+          <td>phe</td>
+          <td>Phenylalanine</td>
+          <td>R</td>
+          <td>arg</td>
+          <td>Arginine</td>
+        </tr>
+        <tr>
+          <td>G</td>
+          <td>gly</td>
+          <td>Glycine</td>
+          <td>S</td>
+          <td>ser</td>
+          <td>Serine</td>
+        </tr>
+        <tr>
+          <td>H</td>
+          <td>his</td>
+          <td>Histidine</td>
+          <td>T</td>
+          <td>thr</td>
+          <td>Threonine</td>
+        </tr>
+        <tr>
+          <td>I</td>
+          <td>ile</td>
+          <td>Isoleucine</td>
+          <td>V</td>
+          <td>val</td>
+          <td>Valine</td>
+        </tr>
+        <tr>
+          <td>K</td>
+          <td>lys</td>
+          <td>Lysine</td>
+          <td>W</td>
+          <td>trp</td>
+          <td>Tryptophan</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>leu</td>
+          <td>Leucine</td>
+          <td>Y</td>
+          <td>tyr</td>
+          <td>Tyrosine</td>
+        </tr>
+      </table>
+
+      <h4 style="margin-bottom:0">Codons to Amino Acids:</h4>
+      <table border="1">
+        <tr>
+          <th rowspan="2">First Position</th>
+          <th colspan="8">Second Position</th>
+          <th rowspan="2">Third Position</th>
+        </tr>
+        <tr>
+          <th colspan="2">U</th>
+          <th colspan="2">C</th>
+          <th colspan="2">A</th>
+          <th colspan="2">G</th>
+        </tr>
+        <tr>
+          <th rowspan="4">U</th>
+          <td>UUC</td>
+          <td rowspan="2">F</td>
+          <td>UCU</td>
+          <td rowspan="4">S</td>
+          <td>UAU</td>
+          <td rowspan="2">Y</td>
+          <td>UGU</td>
+          <td rowspan="2">C</td>
+          <th>U</th>
+        </tr>
+        <tr>
+          <td>UUC</td>
+          <td>UCC</td>
+          <td>UAC</td>
+          <td>UGC</td>
+          <th>C</th>
+        </tr>
+        <tr>
+          <td>UUA</td>
+          <td rowspan="6">L</td>
+          <td>UCA</td>
+          <td>UAA</td>
+          <td rowspan="2">*</td>
+          <td>UGA</td>
+          <td>*</td>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>UUG</td>
+          <td>UCG</td>
+          <td>UAG</td>
+          <td>UGG</td>
+          <td>W</td>
+          <th>G</th>
+        </tr>
+        <tr>
+          <th rowspan="4">C</th>
+          <td>CUU</td>
+          <td>CCU</td>
+          <td rowspan="4">P</td>
+          <td>CAU</td>
+          <td rowspan="2">H</td>
+          <td>CGU</td>
+          <td rowspan="4">R</td>
+          <th>U</th>
+        </tr>
+        <tr>
+          <td>CUC</td>
+          <td>CCC</td>
+          <td>CAC</td>
+          <td>CGC</td>
+          <th>C</th>
+        </tr>
+        <tr>
+          <td>CUA</td>
+          <td>CCA</td>
+          <td>CAA</td>
+          <td rowspan="2">Q</td>
+          <td>CGA</td>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>CUG</td>
+          <td>CCG</td>
+          <td>CAG</td>
+          <td>CGG</td>
+          <th>G</th>
+        </tr>
+        <tr>
+          <th rowspan="4">A</th>
+          <td>AUU</td>
+          <td rowspan="3">I</td>
+          <td>ACU</td>
+          <td rowspan="4">T</td>
+          <td>AAU</td>
+          <td rowspan="2">N</td>
+          <td>AGU</td>
+          <td rowspan="2">S</td>
+          <th>U</th>
+        </tr>
+        <tr>
+          <td>AUC</td>
+          <td>ACC</td>
+          <td>AAC</td>
+          <td>AGC</td>
+          <th>C</th>
+        </tr>
+        <tr>
+          <td>AUA</td>
+          <td>ACA</td>
+          <td>AAA</td>
+          <td rowspan="2">K</td>
+          <td>AGA</td>
+          <td rowspan="2">R</td>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>AUG</td>
+          <td>M</td>
+          <td>ACG</td>
+          <td>AAG</td>
+          <td>AGG</td>
+          <th>G</th>
+        </tr>
+        <tr>
+          <th rowspan="4">G</th>
+          <td>GUU</td>
+          <td rowspan="4">V</td>
+          <td>GCU</td>
+          <td rowspan="4">A</td>
+          <td>GAU</td>
+          <td rowspan="2">D</td>
+          <td>GGU</td>
+          <td rowspan="4">G</td>
+          <th>U</th>
+        </tr>
+        <tr>
+          <td>GUC</td>
+          <td>GCC</td>
+          <td>GAC</td>
+          <td>GGC</td>
+          <th>C</th>
+        </tr>
+        <tr>
+          <td>GUA</td>
+          <td>GCA</td>
+          <td>GAA</td>
+          <td rowspan="2">E</td>
+          <td>GGA</td>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>GUG</td>
+          <td>GCG</td>
+          <td>GAG</td>
+          <td>GGG</td>
+          <th>G</th>
+        </tr>
+      </table>
+
+      <h4>Amino Acids:</h4>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/alanine.png" style="width: auto; height: 75px">
+        <figcaption>Alanine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/cysteine.png" style="width: auto; height: 75px">
+        <figcaption>Cysteine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/aspartic.png" style="width: auto; height: 75px">
+        <figcaption>Aspartic Acid</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/glutamic.png" style="width: auto; height: 75px">
+        <figcaption>Glutamic Acid</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/phenylalanine.png" style="width: auto; height: 75px">
+        <figcaption>Phenylalanine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/glycine.png" style="width: auto; height: 75px">
+        <figcaption>Glycine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/histidine.png" style="width: auto; height: 75px">
+        <figcaption>Histidine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/isoleucine.png" style="width: auto; height: 75px">
+        <figcaption>Isoleucine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/lysine.png" style="width: auto; height: 75px">
+        <figcaption>Lysine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/leucine.png" style="width: auto; height: 75px">
+        <figcaption>Leucine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/methionine.png" style="width: auto; height: 75px">
+        <figcaption>Methionine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/asparagine.png" style="width: auto; height: 75px">
+        <figcaption>Asparagine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/proline.png" style="width: auto; height: 75px">
+        <figcaption>Proline</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/glutamine.png" style="width: auto; height: 75px">
+        <figcaption>Glutamine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/arginine.png" style="width: auto; height: 75px">
+        <figcaption>Arginine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/serine.png" style="width: auto; height: 75px">
+        <figcaption>Serine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/threonine.png" style="width: auto; height: 75px">
+        <figcaption>Threonine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/valine.png" style="width: auto; height: 75px">
+        <figcaption>Valine</figcaption>
+      </figure>
+      <figure class="aminofigure">
+        <img src="gui_help/imgs/aminoacids/tryptophan.png" style="width: auto; height: 75px">
+        <figcaption>Tryptophan</figcaption>
+      </figure>
+      <figure class="aminofigure" style="padding-bottom: 20px">
+        <img src="gui_help/imgs/aminoacids/tyrosine.png" style="width: auto; height: 75px">
+        <figcaption>Tyrosine</figcaption>
+      </figure>
+
+      <h1><a name="chapter2">Sequence Alignment Algorithms</a></h1>
+      <p>
+        Sequence alignment is the process of aligning two or more sequences to be able to
+        compare them. It can give us important information such as how similar different
+        organisms are. Alignment is done by inserting gaps into the sequence, thus allowing
+        bases of one sequence match the base of the other sequence. What score to assign
+        to matches, mismatches, and gaps is chosen experimentally. For algorithm explanation
+        we will set the score of a match to 1 for Needleman-Wunsch, 2 for Smith-Waterman,
+        and the score of a mismatch or gap as -1.
+      </p>
+
+      <h2><a name="chapter2a">Needleman-Wunsch</a></h2>
+      <p>Developed by by Saul B. Needleman and Christian D. Wunsch, this algorithm was designed
+      to compared biological sequences. It outputs the global alignment, which means it tries to
+      align every base.</p>
+      <p>In aligning sequences <a style="font-family: consolas">GCATGCT</a> and
+      <a style="font-family: consolas">GATTACA</a>, we start off with this grid:</p>
+      <table border="1">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>G</th>
+          <th>C</th>
+          <th>A</th>
+          <th>T</th>
+          <th>G</th>
+          <th>C</th>
+          <th>T</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>0</td>
+          <td>-1</td>
+          <td>-2</td>
+          <td>-3</td>
+          <td>-4</td>
+          <td>-5</td>
+          <td>-6</td>
+          <td>-7</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td>-1</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-2</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>-3</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>-4</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-5</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>-6</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-7</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+      </table>
+
+      <p>Now we look for a cell of which has filled cells above, to the left,
+      and diaongal to it.</p>
+      <table border="1" style="display: inline-block">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>G</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="background-color: cyan">0</td>
+          <td style="background-color: red">-1</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td style="background-color: red">-1</td>
+          <td>?</td>
+        </tr>
+      </table>
+      <p>To compute the value for this cell, we consider all 3 options: taking from the top
+      or left cell, marked in red, would introduce a gap in one of the sequences, and so would give a score
+      of -1-1=-2, since we award a score of -1 for a gap. If we take from the diagonal, marked in blue, we have
+      to see whether the two bases match. In this case they do, so we would give a score of 0+1=1.</p>
+      <p>So we have either -1, -1, or 1 to choose from. Always take the highest scoring possibility,
+      so the cell would be a value of 1. If there were two routes that gave the same, but highest score,
+      then this may produce two different best alignments. Continue on until all cells are filled.</p>
+      <table border="1">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>G</th>
+          <th>C</th>
+          <th>A</th>
+          <th>T</th>
+          <th>G</th>
+          <th>C</th>
+          <th>T</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="background-color: cyan">0</td>
+          <td>-1</td>
+          <td>-2</td>
+          <td>-3</td>
+          <td>-4</td>
+          <td>-5</td>
+          <td>-6</td>
+          <td>-7</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td>-1</td>
+          <td style="background-color: cyan">1</td>
+          <td style="background-color: cyan">0</td>
+          <td>-1</td>
+          <td>-2</td>
+          <td>-3</td>
+          <td>-4</td>
+          <td>-5</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-2</td>
+          <td>0</td>
+          <td>0</td>
+          <td style="background-color: cyan">1</td>
+          <td>0</td>
+          <td>-1</td>
+          <td>-2</td>
+          <td>-3</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>-3</td>
+          <td>-1</td>
+          <td>-1</td>
+          <td style="background-color: cyan">0</td>
+          <td style="background-color: cyan">2</td>
+          <td>1</td>
+          <td>0</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>-4</td>
+          <td>-2</td>
+          <td>-2</td>
+          <td>-1</td>
+          <td style="background-color: cyan">1</td>
+          <td style="background-color: cyan">1</td>
+          <td>0</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-5</td>
+          <td>-3</td>
+          <td>-3</td>
+          <td>-1</td>
+          <td>0</td>
+          <td style="background-color: cyan">0</td>
+          <td>0</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>-6</td>
+          <td>-4</td>
+          <td>-2</td>
+          <td>-2</td>
+          <td>-1</td>
+          <td>-1</td>
+          <td style="background-color: cyan">1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>-7</td>
+          <td>-5</td>
+          <td>-3</td>
+          <td>-1</td>
+          <td>-2</td>
+          <td>-2</td>
+          <td>0</td>
+          <td style="background-color: cyan">0</td>
+        </tr>
+      </table>
+      <p>Now we trace up, marked in blue, from the bottom to determine the best alignment(s).</p>
+      <h4 style="margin-bottom: 0">Best Alignments:</h4>
+      <table>
+        <tr>
+          <td style="font-family: consolas">GCATG-CT</td>
+          <td style="font-family: consolas">GCA-TGCU</td>
+          <td style="font-family: consolas">GCAT-GCT</td>
+        </tr>
+        <tr>
+          <td style="font-family: consolas">G-ATTACA</td>
+          <td style="font-family: consolas">G-ATTACA</td>
+          <td style="font-family: consolas">G-ATTACA</td>
+        </tr>
+      </table>
+
+      <h2><a name="chapter2b">Smith-Waterman</a></h2>
+      <p>This algorithm was developed by Temple F. Smith and Michael S.
+      Waterman to determine similar regions between two sequences.
+      It is a variation of the <a href="#chapter2a">Needleman-Wunsch algorithm</a>, except that it
+      opens up the possibility of local alignments by initially setting the
+      negative scoring grid cells to 0.</p>
+      <p>In aligning sequences <a style="font-family: consolas">ACACACTA</a>
+        and <a style="font-family: consolas">AGCACACA</a>, we start off with this grid:</p>
+      <table border="1">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>A</th>
+          <th>C</th>
+          <th>A</th>
+          <th>C</th>
+          <th>A</th>
+          <th>C</th>
+          <th>T</th>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>
+      </table>
+      <p>Now we look for a cell of which has filled cells above, to the left,
+        and diaongal to it.</p>
+      <table border="1" style="display: inline-block">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="background-color: cyan">0</td>
+          <td style="background-color: red">0</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td style="background-color: red">0</td>
+          <td>?</td>
+        </tr>
+      </table>
+      <p>To compute the value for this cell, we consider all 3 options: taking from the top
+        or left cell, marked in red, would introduce a gap in one of the sequences, and so would give a score
+        of 0-1=-1, since we award a score of -1 for a gap. If we take from the diagonal, marked in blue, we have
+        to see whether the two bases match. In this case they do, so we would give a score of 0+1=1.</p>
+      <p>So we have either 0, 0, or 1 to choose from. Always take the highest scoring possibility,
+        so the cell would be a value of 1. If there were two routes that gave the same, but highest score,
+        then this may produce two different best alignments. Continue on until all cells are filled.</p>
+      <table border="1">
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td>
+          <th>A</th>
+          <th>C</th>
+          <th>A</th>
+          <th>C</th>
+          <th>A</th>
+          <th>C</th>
+          <th>T</th>
+          <th>A</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="background-color: cyan">0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td style="background-color: cyan">2</td>
+          <td>1</td>
+          <td>2</td>
+          <td>1</td>
+          <td>2</td>
+          <td>1</td>
+          <td>0</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td>0</td>
+          <td style="background-color: cyan">1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>0</td>
+          <td style="background-color: cyan">3</td>
+          <td>2</td>
+          <td>3</td>
+          <td>2</td>
+          <td>3</td>
+          <td>2</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>2</td>
+          <td>2</td>
+          <td style="background-color: cyan">5</td>
+          <td>4</td>
+          <td>5</td>
+          <td>4</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>1</td>
+          <td>4</td>
+          <td>4</td>
+          <td style="background-color: cyan">7</td>
+          <td>6</td>
+          <td>7</td>
+          <td>6</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>2</td>
+          <td>3</td>
+          <td>6</td>
+          <td>6</td>
+          <td style="background-color: cyan">9</td>
+          <td>8</td>
+          <td>7</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>0</td>
+          <td>1</td>
+          <td>4</td>
+          <td>5</td>
+          <td>8</td>
+          <td>8</td>
+          <td style="background-color: cyan">11</td>
+          <td style="background-color: cyan">10</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <td>0</td>
+          <td>2</td>
+          <td>3</td>
+          <td>6</td>
+          <td>7</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+          <td style="background-color: cyan">12</td>
+        </tr>
+      </table>
+      <h4 style="margin-bottom: 0">Best Alignment:</h4>
+      <table>
+        <tr>
+          <td style="font-family: consolas">A-CACACTA</td>
+        </tr>
+        <tr>
+          <td style="font-family: consolas">AGCACAC-A</td>
+        </tr>
+      </table>
+
+      <h2><a name="chapter2c">Scoring</a></h2>
+      <h3>Scoring Matrix</h3>
+      <p>
+        When using a single score for a match or a mismatch, it assumes that all matches and mismatches yield the
+        same score. This is not always true, especially for proteins. That is, the amino acid A matching A may not
+        yield the same score as V matching V, similarly with mismatches. One way to show this is to use a scoring matrix.
+      </p>
+      <h4 style="margin-bottom:0">Standard DNA Scoring Matrix:</h4>
+      <table border="1">
+        <tr>
+          <th>A</th>
+          <td>1</td>
+          <td>-1</td>
+          <td>-1</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>-1</td>
+          <td>1</td>
+          <td>-1</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>G</th>
+          <td>-1</td>
+          <td>-1</td>
+          <td>1</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>-1</td>
+          <td>-1</td>
+          <td>-1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <th>A</th>
+          <th>T</th>
+          <th>G</th>
+          <th>C</th>
+        </tr>
+      </table>
+      <p>This specific matrix gives us the standard 1 score for match, and -1 for mismatch.</p>
+      <h3>Gap Penalties</h3>
+      <p>In application, when applying a relatively big initial gap penalty that decreases for multiple gaps in a row
+      provides better results in bioinformatics. That is, if one aligned sequence is, say, A-C-G, it is better to have
+      it penalized more than say, A--CG.</p>
+
+      <h2><a name="chapter2d">Outputs</a></h2>
+      <h3>Score</h3>
+      <p>The score of the alignment.</p>
+      <h3>Identity Value (id-value)</h3>
+      <p>The extent to which two sequences have the same residues at the same positions in an alignment,
+        often expressed as a percentage.</p>
+
+    </div>
+    <div class="clear">&nbsp;</div>
+	</div>
+</body>
+
+</html>
